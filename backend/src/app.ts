@@ -1,7 +1,42 @@
-import express from "express";
+import express, { NextFunction, Request, Response } from "express";
+import fs from "fs";
 import Company from "./models/company.model";
+import path from "path";
+import yaml from "js-yaml";
+import swaggerUi from "swagger-ui-express";
 
 const app = express();
+
+const swaggerPath = path.join(__dirname, "../swagger.yaml");
+
+// app.use(
+//   "/api-docs",
+//   swaggerUi.serve,
+//   (req: Request, res: Response, next: NextFunction) => {
+//     try {
+//       const swaggerDocument = yaml.load(
+//         fs.readFileSync(swaggerPath, "utf8")
+//       ) as swaggerUi.JsonObject;
+//       swaggerUi.setup(swaggerDocument)(req, res, next);
+//     } catch (err) {
+//       next(err);
+//     }
+//   }
+// );
+app.use(
+  "/api-docs",
+  swaggerUi.serve,
+  (req: Request, res: Response, next: NextFunction) => {
+    const swaggerDocument = yaml.load(
+      fs.readFileSync(swaggerPath, "utf8")
+    ) as swaggerUi.JsonObject;
+    if (swaggerDocument) {
+      swaggerUi.setup(swaggerDocument)(req, res, next);
+    } else {
+      res.status(500).send("Error loading Swagger document");
+    }
+  }
+);
 
 app.get("/", (req, res) => {
   res.send("Hello");
