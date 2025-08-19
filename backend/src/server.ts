@@ -1,6 +1,6 @@
-import app from './app';
-import dbConnect from './config/db';
-import 'dotenv/config';
+import app from "./app";
+import dbConnect from "./config/db.config";
+import "dotenv/config";
 
 const port = process.env.PORT || 3000;
 
@@ -11,6 +11,6 @@ dbConnect()
     });
   })
   .catch((err: any) => {
-    console.error('SERVER ERROR', err);
+    console.error("SERVER ERROR", err);
     process.exit(1);
   });

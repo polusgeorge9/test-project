@@ -1,4 +1,3 @@
 node_modules
 backend/dist/
-.vscode/
 package-lock.json

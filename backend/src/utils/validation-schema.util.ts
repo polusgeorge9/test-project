@@ -1,0 +1,40 @@
+import { z } from "zod";
+
+// Register/Signup Schema
+export const registerSchema = z.object({
+  name: z.string().trim().min(2, "Provide a name"),
+  email: z.email("Provide a valid email"),
+  password: z.string().min(4, "Provide a Password of minimum four characters"),
+});
+
+// Login Schema
+export const loginSchema = z.object({
+  email: z.email("Provide a valid email"),
+  password: z.string().min(4, "Provide a Password of minimum four characters"),
+});
+
+// Company Schema
+export const companySchema = z.object({
+  name: z.string().min(2, "Name is required"),
+  shortName: z.string().min(1, "Short name is required"),
+  active: z.boolean().default(false),
+});
+
+// Group Schema
+export const groupSchema = z.object({
+  name: z.string().min(2, "Name is required"),
+  active: z.boolean().default(false),
+});
+
+// Product Schema
+export const productSchema = z.object({
+  name: z.string().min(2, "Name is required"),
+  description: z.string().optional(),
+  purchaseRate: z.number().min(0, "Purchase rate must be >= 0"),
+  saleRate: z.number().min(0, "Sale rate must be >= 0"),
+  mrp: z.number().min(0, "MRP must be >= 0"),
+  spRate: z.number().min(0, "Special price must be >= 0"),
+  imagePath: z.string().optional(),
+  companyId: z.string().min(1, "Company ID is required"),
+  groupId: z.string().min(1, "Group ID is required"),
+});

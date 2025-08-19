@@ -1,0 +1,37 @@
+{
+  "editor.fontSize": 16,
+  "editor.lineHeight": 30,
+  "editor.minimap.enabled": false,
+  "explorer.compactFolders": false,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true,
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[html]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[css]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[markdown]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "editor.stickyScroll.scrollWithEditor": false,
+  "workbench.tree.enableStickyScroll": false,
+  "editor.stickyScroll.enabled": false,
+  "material-icon-theme.files.associations": {
+    "*.model.ts": "database",
+    "*.controller.ts": "controller",
+    "*.route.ts": "routing",
+    "*.config.ts": "settings",
+    "*.middleware.ts": "tree",
+    "*.util.ts": "key"
+  }
+}
