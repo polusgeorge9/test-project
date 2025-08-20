@@ -16,14 +16,14 @@ export const loginSchema = z.object({
 // Company Schema
 export const companySchema = z.object({
   name: z.string().min(2, "Name is required"),
-  shortName: z.string().min(1, "Short name is required"),
-  active: z.boolean().default(false),
+  shortname: z.string().min(1, "Short name is required"),
+  active: z.coerce.boolean().optional(),
 });
 
 // Group Schema
 export const groupSchema = z.object({
   name: z.string().min(2, "Name is required"),
-  active: z.boolean().default(false),
+  active: z.coerce.boolean().optional(),
 });
 
 // Product Schema

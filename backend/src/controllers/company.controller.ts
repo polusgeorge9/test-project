@@ -8,14 +8,13 @@ import { IProduct } from "../models/product.model";
 export const createCompany = async (req: Request, res: Response) => {
   const parsed = companySchema.parse(req.body);
   const company = await Company.create(parsed);
-  // Populate products after creation (will be empty initially)
   const populatedCompany = await Company.findById(company._id)
     .populate<{ products: IProduct[] }>("products")
     .lean();
   res.status(201).json({ success: true, data: populatedCompany });
 };
 
-// Get All Companies (populate products)
+// Get All Companies
 export const getCompanies = async (req: Request, res: Response) => {
   const companies = await Company.find()
     .populate<{ products: IProduct[] }>("products")
@@ -23,7 +22,7 @@ export const getCompanies = async (req: Request, res: Response) => {
   res.json({ success: true, data: companies });
 };
 
-// Get Company by ID (populate products)
+// Get Company by Id
 export const getCompanyById = async (req: Request, res: Response) => {
   const company = await Company.findById(req.params.id)
     .populate<{ products: IProduct[] }>("products")
@@ -32,7 +31,7 @@ export const getCompanyById = async (req: Request, res: Response) => {
   res.json({ success: true, data: company });
 };
 
-// Update Company (populate products)
+// Update Company
 export const updateCompany = async (req: Request, res: Response) => {
   const parsed = companySchema.partial().parse(req.body);
   const company = await Company.findByIdAndUpdate(req.params.id, parsed, {
@@ -46,5 +45,5 @@ export const updateCompany = async (req: Request, res: Response) => {
 export const deleteCompany = async (req: Request, res: Response) => {
   const company = await Company.findByIdAndDelete(req.params.id);
   if (!company) throw new ApiError("Company not found", 404);
-  res.json({ success: true, message: "Company deleted" });
+  res.json({ success: true, message: "Company deleted Successfully" });
 };

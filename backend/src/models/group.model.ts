@@ -1,11 +1,11 @@
-import { Schema, model, Document } from "mongoose";
+import mongoose, { Schema, model, Document } from "mongoose";
 
 export interface IGroup extends Document {
   name: string;
   active: boolean;
   createdAt: Date;
   updatedAt: Date;
-  products?: any[]; // For virtual populate
+  products?: any[]; // For virtual field
 }
 
 const groupSchema = new Schema<IGroup>(
@@ -27,8 +27,25 @@ const groupSchema = new Schema<IGroup>(
 groupSchema.virtual("products", {
   ref: "Product",
   localField: "_id",
-  foreignField: "groupId",
+  foreignField: "group",
 });
+
+// Cascade delete products on findOneAndDelete
+groupSchema.pre("findOneAndDelete", async function (next) {
+  const companyDoc = await this.model.findOne(this.getFilter());
+  await mongoose.model("Product").deleteMany({ company: this.getFilter()._id });
+  next();
+});
+
+// Cascade delete products on deleteOne
+groupSchema.pre(
+  "deleteOne",
+  { document: true, query: false },
+  async function (next) {
+    await mongoose.model("Product").deleteMany({ company: this._id });
+    next();
+  }
+);
 
 // Ensure virtuals are included in JSON and Object outputs
 groupSchema.set("toObject", { virtuals: true });

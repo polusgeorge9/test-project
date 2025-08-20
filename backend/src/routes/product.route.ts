@@ -8,8 +8,17 @@ import {
   deleteProduct,
 } from "../controllers/product.controller";
 import { authMiddleware } from "../middlewares/auth.middleware";
+import path from "path";
 
-const upload = multer({ dest: "uploads/" });
+const storage = multer.diskStorage({
+  destination: "uploads/",
+  filename: (_, file, cb) => {
+    const fileparse = path.parse(file.originalname);
+    cb(null, fileparse.name + "-" + Date.now() + "-" + fileparse.ext);
+  },
+});
+
+const upload = multer({ storage });
 
 const router = Router();
 

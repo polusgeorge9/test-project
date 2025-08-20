@@ -1,4 +1,5 @@
-import { Schema, model, Document } from "mongoose";
+import mongoose, { Schema, model, Document } from "mongoose";
+import Product from "./product.model";
 
 export interface ICompany extends Document {
   name: string;
@@ -34,8 +35,25 @@ const companySchema = new Schema<ICompany>(
 companySchema.virtual("products", {
   ref: "Product",
   localField: "_id",
-  foreignField: "companyId",
+  foreignField: "company",
 });
+
+// Cascade delete products on findOneAndDelete
+companySchema.pre("findOneAndDelete", async function (next) {
+  const companyDoc = await this.model.findOne(this.getFilter());
+  await mongoose.model("Product").deleteMany({ company: this.getFilter()._id });
+  next();
+});
+
+// Cascade delete products on deleteOne
+companySchema.pre(
+  "deleteOne",
+  { document: true, query: false },
+  async function (next) {
+    await mongoose.model("Product").deleteMany({ company: this._id });
+    next();
+  }
+);
 
 // Ensure virtuals are included in JSON and Object outputs
 companySchema.set("toObject", { virtuals: true });
