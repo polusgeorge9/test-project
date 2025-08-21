@@ -1,0 +1,433 @@
+{
+	"info": {
+		"_postman_id": "b6ba38bf-9eff-41b4-9fbb-7929261c60a8",
+		"name": "Test Project",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "12495823",
+		"_collection_link": "https://lkteam-9206.postman.co/workspace/LKSOFTWARE~b4e58dec-45cf-48df-add8-9be8e5e614f8/collection/12495823-b6ba38bf-9eff-41b4-9fbb-7929261c60a8?action=share&source=collection_link&creator=12495823"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "Albert",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "georgeynr@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "abc123",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{BASEURL}}auth/register",
+							"host": [
+								"{{BASEURL}}auth"
+							],
+							"path": [
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Logout",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email",
+									"value": "georgeynr@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "abc123",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{BASEURL}}auth/logout",
+							"host": [
+								"{{BASEURL}}auth"
+							],
+							"path": [
+								"logout"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email",
+									"value": "georgeynr@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "abc123",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{BASEURL}}auth/login",
+							"host": [
+								"{{BASEURL}}auth"
+							],
+							"path": [
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "**Authentication Endpoints**\n\n- Register\n    \n- Login\n    \n- Logout"
+		},
+		{
+			"name": "Company",
+			"item": [
+				{
+					"name": "Add Company",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "demo company",
+									"type": "text"
+								},
+								{
+									"key": "shortname",
+									"value": "demo",
+									"type": "text"
+								},
+								{
+									"key": "active",
+									"value": "true",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{BASEURL}}company",
+							"host": [
+								"{{BASEURL}}company"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Companies",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASEURL}}company",
+							"host": [
+								"{{BASEURL}}company"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Company By Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASEURL}}company/68a54f9971dbc17a0a69e497",
+							"host": [
+								"{{BASEURL}}company"
+							],
+							"path": [
+								"68a54f9971dbc17a0a69e497"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Company",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "new demo company",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{BASEURL}}company/68a54f9971dbc17a0a69e497",
+							"host": [
+								"{{BASEURL}}company"
+							],
+							"path": [
+								"68a54f9971dbc17a0a69e497"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Company",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": []
+						},
+						"url": {
+							"raw": "{{BASEURL}}company/68a54f9971dbc17a0a69e497",
+							"host": [
+								"{{BASEURL}}company"
+							],
+							"path": [
+								"68a54f9971dbc17a0a69e497"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Group",
+			"item": [
+				{
+					"name": "Add Group",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "demo group",
+									"type": "text"
+								},
+								{
+									"key": "active",
+									"value": "true",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{BASEURL}}group",
+							"host": [
+								"{{BASEURL}}group"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Group",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASEURL}}group",
+							"host": [
+								"{{BASEURL}}group"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Group By Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASEURL}}group/68a574db4221042756bc1d77",
+							"host": [
+								"{{BASEURL}}group"
+							],
+							"path": [
+								"68a574db4221042756bc1d77"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Group",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "new demo group 1",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{BASEURL}}group/68a574db4221042756bc1d77",
+							"host": [
+								"{{BASEURL}}group"
+							],
+							"path": [
+								"68a574db4221042756bc1d77"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Group",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "new demo company",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{BASEURL}}group/68a54f9971dbc17a0a69e497",
+							"host": [
+								"{{BASEURL}}group"
+							],
+							"path": [
+								"68a54f9971dbc17a0a69e497"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Product",
+			"item": [
+				{
+					"name": "Add Product",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "product",
+									"type": "text"
+								},
+								{
+									"key": "image",
+									"type": "file",
+									"src": "/C:/Users/georg/Desktop/ddd.png"
+								},
+								{
+									"key": "purchaseRate",
+									"value": "11",
+									"type": "text"
+								},
+								{
+									"key": "saleRate",
+									"value": "14",
+									"type": "text"
+								},
+								{
+									"key": "mrp",
+									"value": "22",
+									"type": "text"
+								},
+								{
+									"key": "spRate",
+									"value": "12",
+									"type": "text"
+								},
+								{
+									"key": "company",
+									"value": "68a5c76bb7dd7529473e46d6",
+									"type": "text"
+								},
+								{
+									"key": "group",
+									"value": "68a574db4221042756bc1d77",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{BASEURL}}product",
+							"host": [
+								"{{BASEURL}}product"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Products",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASEURL}}product",
+							"host": [
+								"{{BASEURL}}product"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

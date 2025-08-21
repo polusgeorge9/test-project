@@ -1,87 +1,17 @@
-openapi: 3.1.0
+openapi: 3.0.0
 info:
   title: Test Project API
   version: 1.0.0
-  description: API for managing companies, groups, products, and authentication
-
+  description: API documentation For Test Project.
 servers:
-  - url: /api
+  - url: http://localhost:3000/api
 
 components:
   securitySchemes:
     cookieAuth:
       type: apiKey
       in: cookie
-      name: token
-  schemas:
-    Company:
-      type: object
-      required:
-        - name
-        - shortname
-      properties:
-        name:
-          type: string
-        shortname:
-          type: string
-        active:
-          type: boolean
-        products:
-          type: array
-          items:
-            $ref: "#/components/schemas/Product"
-    Group:
-      type: object
-      required:
-        - name
-      properties:
-        name:
-          type: string
-        active:
-          type: boolean
-        products:
-          type: array
-          items:
-            $ref: "#/components/schemas/Product"
-    Product:
-      type: object
-      required:
-        - name
-        - purchaseRate
-        - saleRate
-        - mrp
-        - spRate
-        - companyId
-        - groupId
-      properties:
-        name:
-          type: string
-        description:
-          type: string
-        purchaseRate:
-          type: number
-        saleRate:
-          type: number
-        mrp:
-          type: number
-        spRate:
-          type: number
-        imagePath:
-          type: string
-        companyId:
-          type: string
-        groupId:
-          type: string
-    User:
-      type: object
-      required:
-        - name
-        - email
-      properties:
-        name:
-          type: string
-        email:
-          type: string
+      name: jwt
 
 security:
   - cookieAuth: []
@@ -89,22 +19,30 @@ security:
 paths:
   /auth/register:
     post:
-      summary: Register a new user
+      summary: Register
+      security: []
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/User"
+              type: object
+              properties:
+                name:
+                  type: string
+                email:
+                  type: string
+                password:
+                  type: string
+              required: [name, email, password]
       responses:
-        "201":
-          description: User registered
-        "400":
-          description: Validation error
+        "200":
+          description: Successful registration
 
   /auth/login:
     post:
-      summary: Login user
+      summary: Login
+      security: []
       requestBody:
         required: true
         content:
@@ -116,49 +54,59 @@ paths:
                   type: string
                 password:
                   type: string
+              required: [email, password]
       responses:
         "200":
-          description: Login successful, JWT set in cookie
-        "401":
-          description: Invalid credentials
+          description: Successful login
 
-  /company:
-    get:
-      summary: Get all companies
-      security:
-        - cookieAuth: []
-      responses:
-        "200":
-          description: List of companies
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/Company"
+  /auth/logout:
     post:
-      summary: Create a new company
-      security:
-        - cookieAuth: []
+      summary: Logout
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/Company"
+              type: object
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+              required: [email, password]
       responses:
-        "201":
+        "200":
+          description: Successful logout
+
+  /company:
+    post:
+      summary: Add Company
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                shortname:
+                  type: string
+                active:
+                  type: boolean
+              required: [name, shortname, active]
+      responses:
+        "200":
           description: Company created
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Company"
+    get:
+      summary: Get All Companies
+      responses:
+        "200":
+          description: List of companies
 
   /company/{id}:
     get:
-      summary: Get company by ID
-      security:
-        - cookieAuth: []
+      summary: Get Company By Id
       parameters:
         - name: id
           in: path
@@ -168,16 +116,8 @@ paths:
       responses:
         "200":
           description: Company details
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Company"
-        "404":
-          description: Company not found
     put:
-      summary: Update company
-      security:
-        - cookieAuth: []
+      summary: Update Company
       parameters:
         - name: id
           in: path
@@ -189,20 +129,19 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/Company"
+              type: object
+              properties:
+                name:
+                  type: string
+                shortname:
+                  type: string
+                active:
+                  type: boolean
       responses:
         "200":
           description: Company updated
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Company"
-        "404":
-          description: Company not found
     delete:
-      summary: Delete company
-      security:
-        - cookieAuth: []
+      summary: Delete Company
       parameters:
         - name: id
           in: path
@@ -212,46 +151,34 @@ paths:
       responses:
         "200":
           description: Company deleted
-        "404":
-          description: Company not found
 
   /group:
-    get:
-      summary: Get all groups
-      security:
-        - cookieAuth: []
-      responses:
-        "200":
-          description: List of groups
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/Group"
     post:
-      summary: Create a new group
-      security:
-        - cookieAuth: []
+      summary: Add Group
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/Group"
+              type: object
+              properties:
+                name:
+                  type: string
+                active:
+                  type: boolean
+              required: [name, active]
       responses:
-        "201":
+        "200":
           description: Group created
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Group"
+    get:
+      summary: Get All Groups
+      responses:
+        "200":
+          description: List of groups
 
   /group/{id}:
     get:
-      summary: Get group by ID
-      security:
-        - cookieAuth: []
+      summary: Get Group By Id
       parameters:
         - name: id
           in: path
@@ -261,16 +188,8 @@ paths:
       responses:
         "200":
           description: Group details
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Group"
-        "404":
-          description: Group not found
     put:
-      summary: Update group
-      security:
-        - cookieAuth: []
+      summary: Update Group
       parameters:
         - name: id
           in: path
@@ -282,20 +201,15 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/Group"
+              type: object
+              properties:
+                name:
+                  type: string
       responses:
         "200":
           description: Group updated
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Group"
-        "404":
-          description: Group not found
     delete:
-      summary: Delete group
-      security:
-        - cookieAuth: []
+      summary: Delete Group
       parameters:
         - name: id
           in: path
@@ -305,138 +219,41 @@ paths:
       responses:
         "200":
           description: Group deleted
-        "404":
-          description: Group not found
 
   /product:
+    post:
+      summary: Add Product
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                image:
+                  type: string
+                  format: binary
+                purchaseRate:
+                  type: number
+                saleRate:
+                  type: number
+                mrp:
+                  type: number
+                spRate:
+                  type: number
+                company:
+                  type: string
+                group:
+                  type: string
+              required:
+                [name, purchaseRate, saleRate, mrp, spRate, company, group]
+      responses:
+        "200":
+          description: Product created
     get:
-      summary: Get all products
-      security:
-        - cookieAuth: []
+      summary: Get All Products
       responses:
         "200":
           description: List of products
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/Product"
-    post:
-      summary: Create a new product (with image upload)
-      security:
-        - cookieAuth: []
-      requestBody:
-        required: true
-        content:
-          multipart/form-data:
-            schema:
-              type: object
-              properties:
-                name:
-                  type: string
-                description:
-                  type: string
-                purchaseRate:
-                  type: number
-                saleRate:
-                  type: number
-                mrp:
-                  type: number
-                spRate:
-                  type: number
-                companyId:
-                  type: string
-                groupId:
-                  type: string
-                image:
-                  type: string
-                  format: binary
-      responses:
-        "201":
-          description: Product created
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Product"
-
-  /product/{id}:
-    get:
-      summary: Get product by ID
-      security:
-        - cookieAuth: []
-      parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: string
-      responses:
-        "200":
-          description: Product details
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Product"
-        "404":
-          description: Product not found
-    put:
-      summary: Update product (with optional image upload)
-      security:
-        - cookieAuth: []
-      parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: string
-      requestBody:
-        required: true
-        content:
-          multipart/form-data:
-            schema:
-              type: object
-              properties:
-                name:
-                  type: string
-                description:
-                  type: string
-                purchaseRate:
-                  type: number
-                saleRate:
-                  type: number
-                mrp:
-                  type: number
-                spRate:
-                  type: number
-                companyId:
-                  type: string
-                groupId:
-                  type: string
-                image:
-                  type: string
-                  format: binary
-      responses:
-        "200":
-          description: Product updated
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Product"
-        "404":
-          description: Product not found
-    delete:
-      summary: Delete product
-      security:
-        - cookieAuth: []
-      parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: string
-      responses:
-        "200":
-          description: Product deleted
-        "404":
-          description: Product not found

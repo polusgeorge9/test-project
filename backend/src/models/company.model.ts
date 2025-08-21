@@ -1,5 +1,4 @@
 import mongoose, { Schema, model, Document } from "mongoose";
-import Product from "./product.model";
 
 export interface ICompany extends Document {
   name: string;
@@ -40,7 +39,6 @@ companySchema.virtual("products", {
 
 // Cascade delete products on findOneAndDelete
 companySchema.pre("findOneAndDelete", async function (next) {
-  const companyDoc = await this.model.findOne(this.getFilter());
   await mongoose.model("Product").deleteMany({ company: this.getFilter()._id });
   next();
 });

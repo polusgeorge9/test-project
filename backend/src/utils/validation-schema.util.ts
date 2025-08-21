@@ -30,11 +30,11 @@ export const groupSchema = z.object({
 export const productSchema = z.object({
   name: z.string().min(2, "Name is required"),
   description: z.string().optional(),
-  purchaseRate: z.number().min(0, "Purchase rate must be >= 0"),
-  saleRate: z.number().min(0, "Sale rate must be >= 0"),
-  mrp: z.number().min(0, "MRP must be >= 0"),
-  spRate: z.number().min(0, "Special price must be >= 0"),
+  purchaseRate: z.coerce.number().min(0, "Purchase rate must be >= 0"),
+  saleRate: z.coerce.number().min(0, "Sale rate must be >= 0"),
+  mrp: z.coerce.number().min(0, "MRP must be >= 0"),
+  spRate: z.coerce.number().min(0, "Special price must be >= 0"),
   imagePath: z.string().optional(),
-  companyId: z.string().min(1, "Company ID is required"),
-  groupId: z.string().min(1, "Group ID is required"),
+  company: z.string().min(1, "Company ID is required"),
+  group: z.string().min(1, "Group ID is required"),
 });

@@ -15,13 +15,19 @@ export const createProduct = async (req: Request, res: Response) => {
 
 // Get All Products
 export const getProducts = async (req: Request, res: Response) => {
-  const products = await Product.find().lean();
+  const products = await Product.find()
+    .populate("company")
+    .populate("group")
+    .lean();
   res.json({ success: true, data: products });
 };
 
 // Get Product by ID
 export const getProductById = async (req: Request, res: Response) => {
-  const product = await Product.findById(req.params.id).lean();
+  const product = await Product.findById(req.params.id)
+    .populate("company")
+    .populate("group")
+    .lean();
   if (!product) throw new ApiError("Product not found", 404);
   res.json({ success: true, data: product });
 };

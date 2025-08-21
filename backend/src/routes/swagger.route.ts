@@ -5,7 +5,7 @@ import swaggerUi from "swagger-ui-express";
 import { Request, Response, NextFunction, Router } from "express";
 
 const router = Router();
-const swaggerPath = path.join(__dirname, "../swagger.yaml");
+const swaggerPath = path.join(__dirname, "../../swagger.yaml");
 
 router.use(
   "/",
